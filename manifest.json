@@ -1,0 +1,22 @@
+{
+    "name": "Queen's Quest",
+    "description": "N-Queens Puzzle",
+    "version": "v0.1",
+    "short_name": "Queen's Quest",
+    "start_url": "https://rohan3004.github.io/Queen-s-Quest/",
+    "display": "standalone",
+    "theme_color": "#973131",
+    "background_color": "#ffff",
+    "icons": [
+        {
+            "src": "https://rohan3004.github.io/Queen-s-Quest/favicon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "https://rohan3004.github.io/Queen-s-Quest/favicon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
