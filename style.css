@@ -36,12 +36,16 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
-    margin: 0 auto;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    position: relative;
+    z-index: 1000;
 }
 
 .navbar-left{
     flex: 1;
+    text-decoration: none;
 }
 
 .navbar-right{
@@ -52,11 +56,14 @@ header {
 .nav-links {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    gap: 15px;
     display: flex;
 }
 
 .nav-links li {
     margin-left: 20px;
+    display: inline;
 }
 
 .nav-links li:first-child {
@@ -95,12 +102,7 @@ header {
     padding: 10px;
 }
 
-.line {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 5px 0;
-}
+
 
 .board-container {
     display: flex;
@@ -239,9 +241,10 @@ footer p {
         position: absolute;
         top: 100%;
         right: 0;
-        background-color: #333;
+        background-color: #333333c3;
         width: 100%;
         text-align: center;
+        border-radius: 10px;
     }
 
     .nav-links.active {
@@ -258,7 +261,7 @@ footer p {
 .modal {
     display: none; 
     position: fixed; 
-    z-index: 1; 
+    z-index: 2000; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -295,28 +298,6 @@ footer p {
     cursor: pointer;
 }
 
-.code-toggle {
-    margin: 15px 0;
-    text-align: center;
-}
-
-.code-toggle input[type="radio"] {
-    display: none;
-}
-
-.code-toggle label {
-    padding: 10px 20px;
-    margin: 0 5px;
-    background-color: #444;
-    color: #fff;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.code-toggle input[type="radio"]:checked + label {
-    background-color: #ff6969;
-    color: #000;
-}
 
 pre {
     background: #1e1e1e; /* Blackish-grey background */

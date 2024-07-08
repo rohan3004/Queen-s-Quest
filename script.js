@@ -73,14 +73,13 @@ function solveNQueens() {
         return;
     }
 
-    createBoard(n);
-
     const board = Array.from({ length: n }, () => Array(n).fill(0));
 
     if (solveNQueensUtil(board, 0, n)) {
+        createBoard(n);
         placeQueens(board, n);
     } else {
-        alert('No solution exists for the given N');
+        alert('No solution exists for '+n+' Queens in '+n+'x'+n+' chess board!');
     }
 }
 
@@ -97,12 +96,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('problemStatementModal');
     const btn = document.getElementById('problemStatementLink');
     const span = document.getElementsByClassName('close-btn')[0];
-    const codeBlocks = {
-        java: document.getElementById('code-java'),
-        cpp: document.getElementById('code-cpp'),
-        javascript: document.getElementById('code-javascript')
-    };
-    const radios = document.querySelectorAll('input[name="code-lang"]');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const javascript = document.getElementById('code-javascript');
 
     btn.onclick = function() {
         modal.style.display = 'block';
@@ -118,19 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    radios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            for (let key in codeBlocks) {
-                codeBlocks[key].style.display = 'none';
-            }
-            codeBlocks[this.value].style.display = 'block';
-            Prism.highlightAll(); // Re-highlight the code
-        });
-    });
 
     document.getElementById('copyCodeBtn').addEventListener('click', function() {
-        const selectedCode = document.querySelector('input[name="code-lang"]:checked').value;
-        const codeToCopy = codeBlocks[selectedCode].textContent;
+        // const selectedCode = document.querySelector('input[name="code-lang"]:checked').value;
+        const codeToCopy = javascript.textContent;
         navigator.clipboard.writeText(codeToCopy).then(() => {
             alert('Code copied to clipboard!');
         }).catch(err => {
@@ -139,5 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Initially show Java code
-    codeBlocks.java.style.display = 'block';
+    javascript.style.display = 'block';
+
+    backgroundMusic.play();
 });

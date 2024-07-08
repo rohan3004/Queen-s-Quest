@@ -28,9 +28,7 @@
                     <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
                 </div>
                 <div class="hamburger-menu">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
+                    <i class="fas fa-bars"></i>
                 </div>
             </div>
         </nav>
@@ -61,105 +59,6 @@
             <br>
             <p>The n-queens is the problem of placing n queens on n × n chessboard such that no two queens can attack each other. Given an integer n, return all distinct solutions to the n -queens puzzle. Each solution contains a distinct boards configuration of the queen's placement.</p>
             <br><h3>Code Implementation</h3>
-            <div class="code-toggle">
-                <input type="radio" id="java" name="code-lang" value="java" checked>
-                <label for="java">Java</label>
-                <input type="radio" id="cpp" name="code-lang" value="cpp">
-                <label for="cpp">C++</label>
-                <input type="radio" id="javascript" name="code-lang" value="javascript">
-                <label for="javascript">JavaScript</label>
-            </div>
-
-            <pre id="code-java" class="code-block"><code class="language-java">
-// Java code for N-Queens problem
-public class NQueens {
-    public List<List<String>> solveNQueens(int n) {
-        List<List<String>> solutions = new ArrayList<>();
-        char[][] board = new char[n][n];
-        for (char[] row : board) {
-            Arrays.fill(row, '.');
-        }
-        solve(board, 0, solutions);
-        return solutions;
-    }
-
-    private void solve(char[][] board, int row, List<List<String>> solutions) {
-        if (row == board.length) {
-            solutions.add(construct(board));
-            return;
-        }
-        for (int col = 0; col < board.length; col++) {
-            if (isValid(board, row, col)) {
-                board[row][col] = 'Q';
-                solve(board, row + 1, solutions);
-                board[row][col] = '.';
-            }
-        }
-    }
-
-    private boolean isValid(char[][] board, int row, int col) {
-        for (int i = 0; i < row; i++) {
-            if (board[i][col] == 'Q') return false;
-        }
-        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
-            if (board[i][j] == 'Q') return false;
-        }
-        for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
-            if (board[i][j] == 'Q') return false;
-        }
-        return true;
-    }
-
-    private List<String> construct(char[][] board) {
-        List<String> path = new ArrayList<>();
-        for (char[] row : board) {
-            path.add(new String(row));
-        }
-        return path;
-    }
-}
-            </code></pre>
-
-            <pre id="code-cpp" class="code-block" style="display:none;"><code class="language-cpp">
-// C++ code for N-Queens problem
-#include <iostream>
-#include <vector>
-#include <string>
-
-using namespace std;
-
-bool isSafe(vector<string>& board, int row, int col, int n) {
-    for (int i = 0; i < row; ++i)
-        if (board[i][col] == 'Q') return false;
-    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j)
-        if (board[i][j] == 'Q') return false;
-    for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j)
-        if (board[i][j] == 'Q') return false;
-    return true;
-}
-
-void solve(vector<string>& board, int row, vector<vector<string>>& solutions, int n) {
-    if (row == n) {
-        solutions.push_back(board);
-        return;
-    }
-    for (int col = 0; col < n; ++col) {
-        if (isSafe(board, row, col, n)) {
-            board[row][col] = 'Q';
-            solve(board, row + 1, solutions, n);
-            board[row][col] = '.';
-        }
-    }
-}
-
-vector<vector<string>> solveNQueens(int n) {
-    vector<vector<string>> solutions;
-    vector<string> board(n, string(n, '.'));
-    solve(board, 0, solutions, n);
-    return solutions;
-}
-            </code></pre>
-
             <pre id="code-javascript" class="code-block" style="display:none;"><code class="language-javascript">
 // JavaScript code for N-Queens problem
 function solveNQueens(n) {
