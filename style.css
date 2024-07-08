@@ -1,0 +1,333 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),url('background.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    color: white;
+}
+
+header {
+    background-color: black;
+    color: white;
+    padding: 10px 0;
+    top: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.navbar-left{
+    flex: 1;
+}
+
+.navbar-right{
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li:first-child {
+    margin-left: 0;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.nav-links li a:hover {
+    color: lightgray;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.social-icons a {
+    color: white;
+    margin-left: 10px;
+    font-size: 24px; /* Adjust size as needed */
+}
+
+.social-icons a:hover {
+    color: lightgray;
+}
+
+.hamburger-menu {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.line {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    width: 100%; /* Ensure the board takes full width */
+    max-width: 600px; /* Limit board width for better readability */
+    background-color: rgba(255, 255, 255, 0); /* Transparent background */
+    padding: 10px;
+    box-shadow: 0 0 30px 30px rgba(255, 105, 105, 0.3); /* Red glowing effect */
+    border-radius: 15px;
+}
+
+.cell {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Maintain square aspect ratio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.cell.black {
+    background-color: #973131;
+}
+
+.cell.white {
+    background-color: #F4E5C2;
+}
+
+.queen {
+    color: #323232;
+    font-size: 2em;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+
+button {
+    background-color: transparent;
+    border: 2px solid #C80036; /* Blue border color */
+    color: #C80036; /* Blue text color */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+button:hover {
+    background-color: #C80036; /* Blue background color on hover */
+    color: white; /* White text color on hover */
+    border-color: #C80036; /* Blue border color on hover */
+}
+
+input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 105, 105, 0); /* Transparent background */
+    margin-bottom: 10px;
+    color: white; /* Text color */
+    outline: none;
+    box-shadow: 0 0 10px 2px rgba(255, 105, 105, 0.3); /* Glow effect */
+    transition: box-shadow 0.5s ease-in-out;
+}
+
+input[type="number"]:focus {
+    box-shadow: 0 0 20px 5px rgba(255, 105, 105, 0.5); /* Increased glow on focus */
+}
+
+
+footer {
+    background-color: black; /* Transparent background */
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+
+@media screen and (max-width: 768px) {
+
+
+    footer p{
+        font-size: .7em;
+    }
+
+    .navbar-right {
+        position: relative;
+    }
+
+    .hamburger-menu {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: #333;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+}
+
+
+/* Modal styles */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.9); /* Dark background with opacity */
+}
+
+.modal-content {
+    background-color: #2d2d2d; /* Dark grey background */
+    color: #ffffff; /* Light text color */
+    margin: 5% auto; 
+    padding: 20px;
+    border: 1px solid #444;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* Darker shadow */
+    overflow-y: auto;
+    max-height: 90%;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.code-toggle {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.code-toggle input[type="radio"] {
+    display: none;
+}
+
+.code-toggle label {
+    padding: 10px 20px;
+    margin: 0 5px;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.code-toggle input[type="radio"]:checked + label {
+    background-color: #ff6969;
+    color: #000;
+}
+
+pre {
+    background: #1e1e1e; /* Blackish-grey background */
+    padding: 10px;
+    border-radius: 5px;
+    overflow-x: auto;
+    box-shadow: 0 0 10px rgba(255, 105, 105, 0.8); /* Glowing effect */
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    color: #f8f8f2; /* Light text color for code */
+}
+

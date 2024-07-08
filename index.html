@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queen's Quest</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
+    <link rel="icon" type="image/x-icon" href="favion.png">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-left">
+                <h1>N-Queens Visualizer</h1>
+            </div>
+            <div class="navbar-right">
+                <ul class="nav-links">
+                    <li><a href="#" id="problemStatementLink">Problem Statement</a></li>
+                    <li><a href="https://leetcode.com/problems/n-queens/description/" target="_blank">Leet Code</a></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                </div>
+                <div class="hamburger-menu">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="board-wrapper">
+            <div class="board-container">
+                <div class="board"></div>
+            </div>
+        </div>
+        <div class="controls">
+            <input type="number" id="nValue" placeholder="Enter N (e.g., 8)">
+            <button onclick="solveNQueens()">Solve</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Copyright &copy; 2024 Rohan Chakravarty. All rights reserved.</p>
+        </div>
+    </footer>
+    <audio id="bgMusic" src="bg-music.mp3" loop autoplay></audio>
+
+    <div id="problemStatementModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>N Queen Problem | Return all Distinct Solutions to the N-Queens Puzzle</h2>
+            <br>
+            <p>The n-queens is the problem of placing n queens on n × n chessboard such that no two queens can attack each other. Given an integer n, return all distinct solutions to the n -queens puzzle. Each solution contains a distinct boards configuration of the queen's placement.</p>
+            <br><h3>Code Implementation</h3>
+            <div class="code-toggle">
+                <input type="radio" id="java" name="code-lang" value="java" checked>
+                <label for="java">Java</label>
+                <input type="radio" id="cpp" name="code-lang" value="cpp">
+                <label for="cpp">C++</label>
+                <input type="radio" id="javascript" name="code-lang" value="javascript">
+                <label for="javascript">JavaScript</label>
+            </div>
+
+            <pre id="code-java" class="code-block"><code class="language-java">
+// Java code for N-Queens problem
+public class NQueens {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> solutions = new ArrayList<>();
+        char[][] board = new char[n][n];
+        for (char[] row : board) {
+            Arrays.fill(row, '.');
+        }
+        solve(board, 0, solutions);
+        return solutions;
+    }
+
+    private void solve(char[][] board, int row, List<List<String>> solutions) {
+        if (row == board.length) {
+            solutions.add(construct(board));
+            return;
+        }
+        for (int col = 0; col < board.length; col++) {
+            if (isValid(board, row, col)) {
+                board[row][col] = 'Q';
+                solve(board, row + 1, solutions);
+                board[row][col] = '.';
+            }
+        }
+    }
+
+    private boolean isValid(char[][] board, int row, int col) {
+        for (int i = 0; i < row; i++) {
+            if (board[i][col] == 'Q') return false;
+        }
+        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') return false;
+        }
+        for (int i = row - 1, j = col + 1; i >= 0 && j < board.length; i--, j++) {
+            if (board[i][j] == 'Q') return false;
+        }
+        return true;
+    }
+
+    private List<String> construct(char[][] board) {
+        List<String> path = new ArrayList<>();
+        for (char[] row : board) {
+            path.add(new String(row));
+        }
+        return path;
+    }
+}
+            </code></pre>
+
+            <pre id="code-cpp" class="code-block" style="display:none;"><code class="language-cpp">
+// C++ code for N-Queens problem
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+bool isSafe(vector<string>& board, int row, int col, int n) {
+    for (int i = 0; i < row; ++i)
+        if (board[i][col] == 'Q') return false;
+    for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j)
+        if (board[i][j] == 'Q') return false;
+    for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j)
+        if (board[i][j] == 'Q') return false;
+    return true;
+}
+
+void solve(vector<string>& board, int row, vector<vector<string>>& solutions, int n) {
+    if (row == n) {
+        solutions.push_back(board);
+        return;
+    }
+    for (int col = 0; col < n; ++col) {
+        if (isSafe(board, row, col, n)) {
+            board[row][col] = 'Q';
+            solve(board, row + 1, solutions, n);
+            board[row][col] = '.';
+        }
+    }
+}
+
+vector<vector<string>> solveNQueens(int n) {
+    vector<vector<string>> solutions;
+    vector<string> board(n, string(n, '.'));
+    solve(board, 0, solutions, n);
+    return solutions;
+}
+            </code></pre>
+
+            <pre id="code-javascript" class="code-block" style="display:none;"><code class="language-javascript">
+// JavaScript code for N-Queens problem
+function solveNQueens(n) {
+    let board = Array(n).fill().map(() => Array(n).fill('.'));
+    let result = [];
+    
+    function isSafe(row, col) {
+        for (let i = 0; i < row; i++) {
+            if (board[i][col] === 'Q') return false;
+            if (col - (row - i) >= 0 && board[i][col - (row - i)] === 'Q') return false;
+            if (col + (row - i) < n && board[i][col + (row - i)] === 'Q') return false;
+        }
+        return true;
+    }
+    
+    function placeQueen(row) {
+        if (row === n) {
+            result.push(board.map(r => r.join('')));
+            return;
+        }
+        for (let col = 0; col < n; col++) {
+            if (isSafe(row, col)) {
+                board[row][col] = 'Q';
+                placeQueen(row + 1);
+                board[row][col] = '.';
+            }
+        }
+    }
+    
+    placeQueen(0);
+    return result;
+}
+            </code></pre>
+
+            <button id="copyCodeBtn">Copy Code</button>
+        </div>
+    </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
