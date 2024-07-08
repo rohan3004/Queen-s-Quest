@@ -34,6 +34,7 @@ function placeQueens(board, n) {
         const cellIndex = i * n + col;
         cells[cellIndex].appendChild(queen);
     }
+    glideSound.play();
 }
 
 // Utility function to check if the queen placement is safe
@@ -98,6 +99,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const span = document.getElementsByClassName('close-btn')[0];
     const backgroundMusic = document.getElementById('backgroundMusic');
     const javascript = document.getElementById('code-javascript');
+    
+    const board = document.querySelector('.board');
+
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            if ((i + j) % 2 === 0) {
+                cell.classList.add('white');
+            } else {
+                cell.classList.add('black');
+            }
+            board.appendChild(cell);
+        }
+    }
 
     btn.onclick = function() {
         modal.style.display = 'block';
@@ -129,3 +145,109 @@ document.addEventListener('DOMContentLoaded', function() {
 
     backgroundMusic.play();
 });
+
+function play(){
+    const n = parseInt(document.getElementById('nValue').value);
+    if (isNaN(n) || n <= 0) {
+        alert('Please enter a valid number greater than 0');
+        return;
+    }
+
+    const glideSound = document.getElementById('glideSound');
+    const board = document.querySelector('.board');
+    board.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
+    board.innerHTML = '';
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            if ((i + j) % 2 === 0) {
+                cell.classList.add('white');
+            } else {
+                cell.classList.add('black');
+            }
+            board.appendChild(cell);
+        }
+    }
+
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.innerHTML = ''; // Clear previous queens
+    });
+
+    for (let i = 0; i < n; i++) {
+        const queen = document.createElement('img');
+        queen.src = 'queen.png'; // Path to your queen image
+        queen.classList.add('queen');
+        queen.draggable = true;
+        cells[i * n + i].appendChild(queen);
+        queen.addEventListener('dragstart', handleDragStart);
+        queen.addEventListener('dragend', handleDragEnd);
+    }
+
+    const squares = document.querySelectorAll('.cell');
+
+    squares.forEach(square =>{
+        square.addEventListener('dragover',handleDragOver);
+        square.addEventListener('drop',handleDrop);
+    });
+
+    let draggedItem = null;
+
+    function handleDragStart(e) {
+        draggedItem = this;
+        setTimeout(() => {
+            this.classList.add('invisible');
+        }, 0);
+    }
+
+    function handleDragEnd() {
+        this.classList.remove('invisible');
+        checkSolution();
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        if (this !== draggedItem.parentElement) {
+            this.appendChild(draggedItem);
+            glideSound.play();
+        }
+    }
+
+    function checkSolution() {
+        const queenPositions = [];
+        cells.forEach((cell, index) => {
+            if (cell.querySelector('.queen')) {
+                const row = Math.floor(index / n);
+                const col = index % n;
+                queenPositions.push([row, col]);
+            }
+        });
+
+        if (queenPositions.length === n && isValidSolution(queenPositions)) {
+            congratsMessage.style.display = 'block';
+            setTimeout(() => {
+                congratsMessage.style.display = 'none';
+            }, 3000); // Hide message after 5 seconds
+        } else {
+            congratsMessage.style.display = 'none';
+        }
+    }
+    function isValidSolution(positions) {
+        for (let i = 0; i < positions.length; i++) {
+            for (let j = i + 1; j < positions.length; j++) {
+                const [r1, c1] = positions[i];
+                const [r2, c2] = positions[j];
+                if (r1 === r2 || c1 === c2 || Math.abs(r1 - r2) === Math.abs(c1 - c2)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}

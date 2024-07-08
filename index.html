@@ -13,19 +13,21 @@
     <link rel="icon" type="image/x-icon" href="favion.png">
 </head>
 <body>
+    <audio id="glideSound" src="glide.mp3"></audio>
     <header>
         <nav class="navbar">
             <div class="navbar-left">
-                <h1>N-Queens Visualizer</h1>
+                <a href="index.html"><h1>Queen's Quest</h1></a>
             </div>
             <div class="navbar-right">
                 <ul class="nav-links">
                     <li><a href="#" id="problemStatementLink">Problem Statement</a></li>
+                    <li><a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle" target="_blank">History</a></li>
                     <li><a href="https://leetcode.com/problems/n-queens/description/" target="_blank">Leet Code</a></li>
                 </ul>
                 <div class="social-icons">
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/rohan3004/Queen-s-Quest" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/rohan-chakravarty-/" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin"></i></a>
                 </div>
                 <div class="hamburger-menu">
                     <i class="fas fa-bars"></i>
@@ -40,9 +42,13 @@
             </div>
         </div>
         <div class="controls">
-            <input type="number" id="nValue" placeholder="Enter N (e.g., 8)">
+            <input type="number" id="nValue" placeholder="Enter N (e.g., 8)" value="8">
+            <div class="buttons">
+            <button onclick="play()">Play</button>
             <button onclick="solveNQueens()">Solve</button>
         </div>
+        </div>
+        <div class="congrats-message" id="congratsMessage">Congratulations, you have won the game!</div>
     </div>
 
     <footer>
