@@ -228,26 +228,33 @@ function play(){
     function handleTouchStart(e) {
         draggedItem = this;
         const touch = e.touches[0];
-        touchX = touch.clientX - touch.target.getBoundingClientRect().left;
-        touchY = touch.clientY - touch.target.getBoundingClientRect().top;
+        const offsetX = touch.clientX - touch.target.getBoundingClientRect().left;
+        const offsetY = touch.clientY - touch.target.getBoundingClientRect().top;
+        draggedItem.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     }
 
     function handleTouchMove(e) {
         e.preventDefault();
         const touch = e.touches[0];
-        const offsetX = touch.clientX - touchX;
-        const offsetY = touch.clientY - touchY;
+        const offsetX = touch.clientX - touch.target.getBoundingClientRect().left;
+        const offsetY = touch.clientY - touch.target.getBoundingClientRect().top;
         draggedItem.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
     }
 
     function handleTouchEnd(e) {
         if (draggedItem) {
+            const touch = e.changedTouches[0];
+            const targetCell = document.elementFromPoint(touch.clientX, touch.clientY);
+            if (targetCell && targetCell.classList.contains('cell')) {
+                targetCell.appendChild(draggedItem);
+                glideSound.play();
+                checkSolution();
+            }
             draggedItem.style.transform = 'translate(0, 0)';
-            glideSound.play();
-            checkSolution();
         }
         draggedItem = null;
     }
+
 
 
     function checkSolution() {
