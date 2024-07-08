@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+    margin: 0;
+    flex-direction: column; */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* .container {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.board {
+    display: grid;
+    gap: 2px;
+    width: auto; 
+    padding: 10px;
+    box-shadow: 0 0 15px 5px rgba(255, 105, 105, 0.5); 
+    border-radius: 5px;
+}
+
+.cell {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    position: relative;
+} */
+
+/* new */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin-left: 20px;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar ul li {
+    margin-right: 20px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: color 0.3s;
+}
+
+.navbar ul li a:hover {
+    color: #f8f9fa;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.board {
+    display: grid;
+    gap: 2px;
+    width: auto; /* Ensure the board takes necessary width */
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent background */
+    padding: 10px;
+    box-shadow: 0 0 15px 5px rgba(255, 105, 105, 0.5); /* Red glowing effect */
+    border-radius: 10px;
+}
+
+.cell {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%; /* Maintain square aspect ratio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+.cell.black {
+    background-color: #973131;
+}
+
+.cell.white {
+    background-color: #F4E5C2;
+}
+
+.queen {
+    color: #323232;
+    font-size: 2em;
+    width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+
+button {
+    background-color: transparent;
+    border: 2px solid #C80036; /* Blue border color */
+    color: #C80036; /* Blue text color */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+button:hover {
+    background-color: #C80036; /* Blue background color on hover */
+    color: white; /* White text color on hover */
+    border-color: #C80036; /* Blue border color on hover */
+}
+
+input[type="number"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5); /* Transparent background */
+    margin-bottom: 10px;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff; /* Focus color */
+}
+
+footer {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+}
