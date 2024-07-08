@@ -1,84 +1,85 @@
-function visualizeNQueens() {
-    const n = parseInt(document.getElementById("n-value").value);
-    const board = document.getElementById("chess-board");
-    
-    if (isNaN(n) || n < 4) {
-        alert("Please enter a valid number N (>= 4).");
+// Function to create the chessboard
+function createBoard(n) {
+    const board = document.querySelector('.board');
+    board.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
+    board.innerHTML = '';
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            if ((i + j) % 2 === 0) {
+                cell.classList.add('white');
+            } else {
+                cell.classList.add('black');
+            }
+            board.appendChild(cell);
+        }
+    }
+}
+
+// Function to place queens on the board
+function placeQueens(board, n) {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.innerHTML = ''; // Clear previous queens
+    });
+
+    for (let i = 0; i < n; i++) {
+        const row = board[i];
+        const col = row.indexOf(1);
+        const queen = document.createElement('img');
+        queen.src = 'queen.png'; // Path to your queen image
+        queen.classList.add('queen');
+        const cellIndex = i * n + col;
+        cells[cellIndex].appendChild(queen);
+    }
+}
+
+// Utility function to check if the queen placement is safe
+function isSafe(board, row, col, n) {
+    for (let i = 0; i < col; i++)
+        if (board[row][i] === 1) return false;
+
+    for (let i = row, j = col; i >= 0 && j >= 0; i--, j--)
+        if (board[i][j] === 1) return false;
+
+    for (let i = row, j = col; j >= 0 && i < n; i++, j--)
+        if (board[i][j] === 1) return false;
+
+    return true;
+}
+
+// Recursive utility function to solve N-Queens problem
+function solveNQueensUtil(board, col, n) {
+    if (col >= n) return true;
+
+    for (let i = 0; i < n; i++) {
+        if (isSafe(board, i, col, n)) {
+            board[i][col] = 1;
+            if (solveNQueensUtil(board, col + 1, n)) return true;
+            board[i][col] = 0;
+        }
+    }
+
+    return false;
+}
+
+// Function to solve N-Queens problem
+function solveNQueens() {
+    const n = parseInt(document.getElementById('nValue').value);
+    if (isNaN(n) || n <= 0) {
+        alert('Please enter a valid number greater than 0');
         return;
     }
 
-    board.innerHTML = "";
-    board.style.gridTemplateColumns = `repeat(${n}, 50px)`;
-    board.style.gridTemplateRows = `repeat(${n}, 50px)`;
+    createBoard(n);
 
-    const solution = solveNQueens(n);
-    animateBoard(n, solution);
-}
+    const board = Array.from({ length: n }, () => Array(n).fill(0));
 
-function createBoard(n, solution) {
-    for (let row = 0; row < n; row++) {
-        for (let col = 0; col < n; col++) {
-            const cell = document.createElement("div");
-            cell.classList.add("cell");
-            cell.classList.add((row + col) % 2 === 0 ? "white" : "black");
-            
-            if (solution[row] === col) {
-                const queen = document.createElement("span");
-                queen.classList.add("queen");
-                queen.textContent = "♛";
-                cell.appendChild(queen);
-            }
-            
-            document.getElementById("chess-board").appendChild(cell);
-        }
+    if (solveNQueensUtil(board, 0, n)) {
+        placeQueens(board, n);
+    } else {
+        alert('No solution exists for the given N');
     }
-}
-
-function animateBoard(n, solution) {
-    const delay = 500; // delay in milliseconds
-    for (let row = 0; row < n; row++) {
-        for (let col = 0; col < n; col++) {
-            const cell = document.createElement("div");
-            cell.classList.add("cell");
-            cell.classList.add((row + col) % 2 === 0 ? "white" : "black");
-            
-            document.getElementById("chess-board").appendChild(cell);
-
-            if (solution[row] === col) {
-                setTimeout(() => {
-                    const queen = document.createElement("span");
-                    queen.classList.add("queen");
-                    queen.textContent = "♛";
-                    cell.appendChild(queen);
-                }, row * delay);
-            }
-        }
-    }
-}
-
-function solveNQueens(n) {
-    const solution = new Array(n).fill(-1);
-    const cols = new Array(n).fill(false);
-    const diag1 = new Array(2 * n - 1).fill(false);
-    const diag2 = new Array(2 * n - 1).fill(false);
-
-    function backtrack(row) {
-        if (row === n) return true;
-
-        for (let col = 0; col < n; col++) {
-            if (cols[col] || diag1[row - col + n - 1] || diag2[row + col]) continue;
-
-            solution[row] = col;
-            cols[col] = diag1[row - col + n - 1] = diag2[row + col] = true;
-
-            if (backtrack(row + 1)) return true;
-
-            solution[row] = -1;
-            cols[col] = diag1[row - col + n - 1] = diag2[row + col] = false;
-        }
-        return false;
-    }
-
-    backtrack(0);
-    return solution;
 }

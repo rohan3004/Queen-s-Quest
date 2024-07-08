@@ -8,13 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="queen.png">
+    <link rel="icon" type="image/x-icon" href="favion.png">
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <div class="container">
-                <h1>N-Queens Visualizer</h1>
+            <div class="navcontainer">
+                <h1>Queen's Quest</h1>
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
@@ -24,22 +24,23 @@
         </nav>
     </header>
     <div class="container">
-        <h1>N-Queens Visualizer</h1>
-        <input type="number" id="n-value" min="4" placeholder="Enter N">
-        <button onclick="visualizeNQueens()">Go</button>
-        <div class="board-container">
-            <div class="board" id="chess-board">
-                <!-- The board will be generated here by JavaScript -->
+        <div class="board-wrapper">
+            <div class="board-container">
+                <div class="board"></div>
             </div>
+        </div>
+        <div class="controls">
+            <input type="number" id="nValue" placeholder="Enter N (e.g., 8)">
+            <button onclick="solveNQueens()">Solve</button>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 N-Queens Visualizer. All rights reserved.</p>
+            <p>Copyright &copy; 2024 Rohan Chakravarty. All rights reserved.</p>
         </div>
     </footer>
-
+    <audio id="bgMusic" src="bg-music.mp3" loop autoplay></audio>
     <script src="script.js"></script>
 </body>
 </html>
