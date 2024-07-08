@@ -91,3 +91,53 @@ const navLinks = document.querySelector('.nav-links');
 hamburgerMenu.addEventListener('click', () => {
     navLinks.classList.toggle('active');
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('problemStatementModal');
+    const btn = document.getElementById('problemStatementLink');
+    const span = document.getElementsByClassName('close-btn')[0];
+    const codeBlocks = {
+        java: document.getElementById('code-java'),
+        cpp: document.getElementById('code-cpp'),
+        javascript: document.getElementById('code-javascript')
+    };
+    const radios = document.querySelectorAll('input[name="code-lang"]');
+
+    btn.onclick = function() {
+        modal.style.display = 'block';
+    }
+
+    span.onclick = function() {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            for (let key in codeBlocks) {
+                codeBlocks[key].style.display = 'none';
+            }
+            codeBlocks[this.value].style.display = 'block';
+            Prism.highlightAll(); // Re-highlight the code
+        });
+    });
+
+    document.getElementById('copyCodeBtn').addEventListener('click', function() {
+        const selectedCode = document.querySelector('input[name="code-lang"]:checked').value;
+        const codeToCopy = codeBlocks[selectedCode].textContent;
+        navigator.clipboard.writeText(codeToCopy).then(() => {
+            alert('Code copied to clipboard!');
+        }).catch(err => {
+            alert('Failed to copy code: ', err);
+        });
+    });
+
+    // Initially show Java code
+    codeBlocks.java.style.display = 'block';
+});
