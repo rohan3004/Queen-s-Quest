@@ -184,6 +184,9 @@ function play(){
         cells[i * n + i].appendChild(queen);
         queen.addEventListener('dragstart', handleDragStart);
         queen.addEventListener('dragend', handleDragEnd);
+        queen.addEventListener('touchstart', handleTouchStart);
+        queen.addEventListener('touchmove', handleTouchMove);
+        queen.addEventListener('touchend', handleTouchEnd);
     }
 
     const squares = document.querySelectorAll('.cell');
@@ -218,6 +221,34 @@ function play(){
             glideSound.play();
         }
     }
+
+    let touchX = 0;
+    let touchY = 0;
+
+    function handleTouchStart(e) {
+        draggedItem = this;
+        const touch = e.touches[0];
+        touchX = touch.clientX - touch.target.getBoundingClientRect().left;
+        touchY = touch.clientY - touch.target.getBoundingClientRect().top;
+    }
+
+    function handleTouchMove(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        const offsetX = touch.clientX - touchX;
+        const offsetY = touch.clientY - touchY;
+        draggedItem.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+    }
+
+    function handleTouchEnd(e) {
+        if (draggedItem) {
+            draggedItem.style.transform = 'translate(0, 0)';
+            draggedItem = null;
+            glideSound.play();
+            checkSolution();
+        }
+    }
+
 
     function checkSolution() {
         const queenPositions = [];
