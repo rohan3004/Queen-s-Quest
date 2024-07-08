@@ -243,10 +243,10 @@ function play(){
     function handleTouchEnd(e) {
         if (draggedItem) {
             draggedItem.style.transform = 'translate(0, 0)';
-            draggedItem = null;
             glideSound.play();
             checkSolution();
         }
+        draggedItem = null;
     }
 
 
