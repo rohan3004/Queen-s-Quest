@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="controls">
-            <input type="number" id="nValue" placeholder="Enter N (e.g., 8)" value="8">
+            <input type="number" id="nValue" placeholder="Enter N (e.g., 8)">
             <div class="buttons">
             <button onclick="play()">Play</button>
             <button onclick="solveNQueens()">Solve</button>
@@ -66,6 +66,8 @@
             <p>The n-queens is the problem of placing n queens on n × n chessboard such that no two queens can attack each other. Given an integer n, return all distinct solutions to the n -queens puzzle. Each solution contains a distinct boards configuration of the queen's placement.</p>
             <br><h3>Code Implementation</h3>
             <pre id="code-javascript" class="code-block" style="display:none;"><code class="language-javascript">
+//Copyright © Rohan Chakravarty. All Rights Reserved.
+//C++
 class Solution {
 public:
  vector&lt;vector&lt;string&gt;&gt; solveNQueens(int n) {
@@ -114,33 +116,6 @@ public:
     board[i][col]='.';
    }
   }
- }
-
- bool isSafe(vector&lt;string&gt; &amp;board,int row,int col,int n) {//O(3n)
-  const int r=row,c=col;
-  //checking upper left diagonal
-  while (row&gt;=0 &amp;&amp; col&gt;=0) {
-   if(board[row][col]=='Q')
-    return false;
-   row--;
-   col--;
-  }
-  //checking left side
-  col=c;
-  row=r;
-  while(col&gt;=0) {
-   if(board[row][col]=='Q')return false;
-   col--;
-  }
-  //checking lower left diagonal
-  col=c;
-  row=r;
-  while (row&lt;=n &amp;&amp; col&gt;=0) {
-   if(board[row][col]=='Q')return false;
-   row++;
-   col--;
-  }
-  return true;
  }
 };
             </code></pre>
