@@ -23,7 +23,7 @@ a:hover{
     color: lightgray;
 }
 .container {
-    width: 80%;
+    width: 90%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -211,7 +211,6 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    margin-top: 20px;
 }
 
 footer p {
@@ -260,6 +259,10 @@ footer p {
 
     .nav-links li {
         margin: 10px 0;
+    }
+
+    #typing-footer {
+        font-size: 1rem;
     }
 }
 
@@ -331,4 +334,35 @@ code {
     border-radius: 10px;
     z-index: 1002;
     text-align: center;
+}
+
+#typing-footer{
+    margin: 0px;
+    overflow: hidden;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 3s steps(30) forwards, blink-caret 0.5s step-end infinite alternate;
+    word-wrap: break-word;
+    font-size: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90vw;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: #000;
+    }
 }
