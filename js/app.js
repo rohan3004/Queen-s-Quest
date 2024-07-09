@@ -18,33 +18,47 @@ function createBoard(n) {
     }
 }
 
-// Function to place queens on the board
-function placeQueens(board, n) {
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => {
-        cell.innerHTML = ''; // Clear previous queens
-    });
-
-    for (let i = 0; i < n; i++) {
-        const row = board[i];
-        const col = row.indexOf(1);
-        const queen = document.createElement('img');
-        queen.src = 'assets/queen.png'; // Path to your queen image
-        queen.classList.add('queen');
-        const cellIndex = i * n + col;
-        cells[cellIndex].appendChild(queen);
+function highlightCell(row, col, n, highlight) {
+    const cellIndex = row * n + col;
+    const cell = document.querySelectorAll('.cell')[cellIndex];
+    if (highlight) {
+        cell.classList.add('highlight');
+    } else {
+        cell.classList.remove('highlight');
     }
-    glideSound.play();
 }
 
 function isSafe(row, col, left, upperD, lowerD, n) {
     return left[row] === 0 && upperD[(n - 1) + (col - row)] === 0 && lowerD[row + col] === 0;
 }
 
-function solveNQueensUtil(board, col, n, ans, left, upperD, lowerD) {
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+const placeQueens = (board, n) => {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        cell.innerHTML = ''; // Clear previous queens
+    });
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            if (board[i][j] === 1) {
+                const cell = cells[i * n + j];
+                const queen = document.createElement('img');
+                queen.src = 'assets/queen.png'; // Path to your queen image
+                queen.classList.add('queen');
+                cell.appendChild(queen);
+            }
+        }
+    }
+    glideSound.play();
+};
+async function solveNQueensUtil(board, col, n, left, upperD, lowerD) {
     if (col == n) {
-        ans.push(board.map(row => [...row]));
-        return;
+        return true;
     }
 
     for (let row = 0; row < n; row++) {
@@ -53,17 +67,37 @@ function solveNQueensUtil(board, col, n, ans, left, upperD, lowerD) {
             left[row] = 1;
             upperD[(n - 1) + (col - row)] = 1;
             lowerD[row + col] = 1;
-            solveNQueensUtil(board, col + 1, n, ans, left, upperD, lowerD);
+
+            
+            createBoard(n);
+            placeQueens(board,n);
+            await sleep(700);
+
+            if(await solveNQueensUtil(board,col+1,n,left,upperD,lowerD)){
+                return true;
+            }
+
+
+            // Backtrack
+            highlightCell(row, col, n, true); // Highlight the cell in red
             board[row][col] = 0;
             left[row] = 0;
             upperD[(n - 1) + (col - row)] = 0;
             lowerD[row + col] = 0;
+            await sleep(700); // Wait 500ms to visualize the step
+            highlightCell(row, col, n, false); // Remove the highlight
+
+            createBoard(n);
+            placeQueens(board,n);
+            await sleep(700); // Wait 500ms to visualize the step
+
         }
     }
+    return false;
 }
 
 // Function to solve N-Queens problem
-function solveNQueens() {
+async function solveNQueens() {
     const n = parseInt(document.getElementById('nValue').value);
     if (isNaN(n) || n <= 0) {
         alert('Please enter a valid number greater than 0');
@@ -71,20 +105,15 @@ function solveNQueens() {
     }
 
     const board = Array.from({ length: n }, () => Array(n).fill(0));
-    const ans = [];
     const left = Array(n).fill(0);
     const upperD = Array(2 * n - 1).fill(0);
     const lowerD = Array(2 * n - 1).fill(0);
 
 
-    solveNQueensUtil(board, 0, n, ans, left, upperD, lowerD);
-
-    if (ans.length > 0) {
-        createBoard(n);
-        placeQueens(ans[0], n);
-    } else {
+    if (!await solveNQueensUtil(board, 0, n, left, upperD, lowerD)) {
         alert('No solution exists for ' + n + ' Queens in ' + n + 'x' + n + ' chess board!');
     }
+
 }
 
 
@@ -142,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initially show Java code
     javascript.style.display = 'block';
     backgroundMusic.play();
 });
