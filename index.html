@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen's Quest</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css">
-    <link rel="icon" type="image/x-icon" href="favion.png">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 <body>
-    <audio id="glideSound" src="glide.mp3"></audio>
+    <audio id="glideSound" src="assets/glide.mp3"></audio>
     <header>
         <nav class="navbar">
             <div class="navbar-left">
@@ -56,7 +56,7 @@
             <p>Copyright &copy; 2024 Rohan Chakravarty. All rights reserved.</p>
         </div>
     </footer>
-    <audio id="bgMusic" src="bg-music.mp3" loop autoplay></audio>
+    <audio id="bgMusic" src="assets/bg-music.mp3" loop autoplay></audio>
 
     <div id="problemStatementModal" class="modal">
         <div class="modal-content">
@@ -66,37 +66,83 @@
             <p>The n-queens is the problem of placing n queens on n × n chessboard such that no two queens can attack each other. Given an integer n, return all distinct solutions to the n -queens puzzle. Each solution contains a distinct boards configuration of the queen's placement.</p>
             <br><h3>Code Implementation</h3>
             <pre id="code-javascript" class="code-block" style="display:none;"><code class="language-javascript">
-// JavaScript code for N-Queens problem
-function solveNQueens(n) {
-    let board = Array(n).fill().map(() => Array(n).fill('.'));
-    let result = [];
-    
-    function isSafe(row, col) {
-        for (let i = 0; i < row; i++) {
-            if (board[i][col] === 'Q') return false;
-            if (col - (row - i) >= 0 && board[i][col - (row - i)] === 'Q') return false;
-            if (col + (row - i) < n && board[i][col + (row - i)] === 'Q') return false;
-        }
-        return true;
-    }
-    
-    function placeQueen(row) {
-        if (row === n) {
-            result.push(board.map(r => r.join('')));
-            return;
-        }
-        for (let col = 0; col < n; col++) {
-            if (isSafe(row, col)) {
-                board[row][col] = 'Q';
-                placeQueen(row + 1);
-                board[row][col] = '.';
-            }
-        }
-    }
-    
-    placeQueen(0);
-    return result;
-}
+class Solution {
+public:
+ vector&lt;vector&lt;string&gt;&gt; solveNQueens(int n) {
+  vector&lt;vector&lt;string&gt;&gt; ans;//this vector will add all of the possible combinations board
+  vector&lt;string&gt; board(n);
+  string s(n, '.');
+  for (int i = 0; i &lt; n; i++) {
+   board[i] = s;
+  }
+  vector&lt;int&gt; left(n,0),upperd(2*n-1,0),lowerD(2*n-1,0);
+  solve(board,0,n,ans,left,upperd,lowerD);
+  return ans;
+ }
+
+ void solve(vector&lt;string&gt; &amp;board, int col,int n,vector&lt;vector&lt;string&gt;&gt; &amp;ans,vector&lt;int&gt; &amp;left,vector&lt;int&gt; &amp;upperD,vector&lt;int&gt; &amp;lowerD) {//OP solution
+  if(col == n) {
+   ans.push_back(board);
+   return;
+  }
+
+  for(int row =0;row&lt;n;row++) {
+   if(left[row]==0 &amp;&amp; upperD[(n-1)+(col-row)]==0 &amp;&amp; lowerD[row+col]==0) {
+    board[row][col]='Q';
+    left[row]=1;
+    upperD[(n-1)+(col-row)]=1;
+    lowerD[row+col]=1;
+    solve(board,col+1,n,ans,left,upperD,lowerD);
+    board[row][col]='.';
+    left[row]=0;
+    upperD[(n-1)+(col-row)]=0;
+    lowerD[row+col]=0;
+   }
+  }
+ }
+
+ void solve(vector&lt;string&gt; &amp;board,int col,int n,vector&lt;vector&lt;string&gt;&gt; &amp;ans) {
+  if(col==n) {
+   ans.push_back(board);
+   return;
+  }
+
+  for(int i=0;i&lt;n;i++) {
+   if(isSafe(board,i,col,n)) {
+    board[i][col]='Q';
+    solve(board,col+1,n,ans);
+    board[i][col]='.';
+   }
+  }
+ }
+
+ bool isSafe(vector&lt;string&gt; &amp;board,int row,int col,int n) {//O(3n)
+  const int r=row,c=col;
+  //checking upper left diagonal
+  while (row&gt;=0 &amp;&amp; col&gt;=0) {
+   if(board[row][col]=='Q')
+    return false;
+   row--;
+   col--;
+  }
+  //checking left side
+  col=c;
+  row=r;
+  while(col&gt;=0) {
+   if(board[row][col]=='Q')return false;
+   col--;
+  }
+  //checking lower left diagonal
+  col=c;
+  row=r;
+  while (row&lt;=n &amp;&amp; col&gt;=0) {
+   if(board[row][col]=='Q')return false;
+   row++;
+   col--;
+  }
+  return true;
+ }
+};
             </code></pre>
 
             <button id="copyCodeBtn">Copy Code</button>
@@ -105,6 +151,6 @@ function solveNQueens(n) {
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
-    <script src="script.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

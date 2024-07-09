@@ -29,7 +29,7 @@ function placeQueens(board, n) {
         const row = board[i];
         const col = row.indexOf(1);
         const queen = document.createElement('img');
-        queen.src = 'queen.png'; // Path to your queen image
+        queen.src = 'assets/queen.png'; // Path to your queen image
         queen.classList.add('queen');
         const cellIndex = i * n + col;
         cells[cellIndex].appendChild(queen);
@@ -37,33 +37,29 @@ function placeQueens(board, n) {
     glideSound.play();
 }
 
-// Utility function to check if the queen placement is safe
-function isSafe(board, row, col, n) {
-    for (let i = 0; i < col; i++)
-        if (board[row][i] === 1) return false;
-
-    for (let i = row, j = col; i >= 0 && j >= 0; i--, j--)
-        if (board[i][j] === 1) return false;
-
-    for (let i = row, j = col; j >= 0 && i < n; i++, j--)
-        if (board[i][j] === 1) return false;
-
-    return true;
+function isSafe(row, col, left, upperD, lowerD, n) {
+    return left[row] === 0 && upperD[(n - 1) + (col - row)] === 0 && lowerD[row + col] === 0;
 }
 
-// Recursive utility function to solve N-Queens problem
-function solveNQueensUtil(board, col, n) {
-    if (col >= n) return true;
-
-    for (let i = 0; i < n; i++) {
-        if (isSafe(board, i, col, n)) {
-            board[i][col] = 1;
-            if (solveNQueensUtil(board, col + 1, n)) return true;
-            board[i][col] = 0;
-        }
+function solveNQueensUtil(board, col, n, ans, left, upperD, lowerD) {
+    if (col == n) {
+        ans.push(board.map(row => [...row]));
+        return;
     }
 
-    return false;
+    for (let row = 0; row < n; row++) {
+        if (isSafe(row, col, left, upperD, lowerD, n)) {
+            board[row][col] = 1;
+            left[row] = 1;
+            upperD[(n - 1) + (col - row)] = 1;
+            lowerD[row + col] = 1;
+            solveNQueensUtil(board, col + 1, n, ans, left, upperD, lowerD);
+            board[row][col] = 0;
+            left[row] = 0;
+            upperD[(n - 1) + (col - row)] = 0;
+            lowerD[row + col] = 0;
+        }
+    }
 }
 
 // Function to solve N-Queens problem
@@ -75,12 +71,19 @@ function solveNQueens() {
     }
 
     const board = Array.from({ length: n }, () => Array(n).fill(0));
+    const ans = [];
+    const left = Array(n).fill(0);
+    const upperD = Array(2 * n - 1).fill(0);
+    const lowerD = Array(2 * n - 1).fill(0);
 
-    if (solveNQueensUtil(board, 0, n)) {
+
+    solveNQueensUtil(board, 0, n, ans, left, upperD, lowerD);
+
+    if (ans.length > 0) {
         createBoard(n);
-        placeQueens(board, n);
+        placeQueens(ans[0], n);
     } else {
-        alert('No solution exists for '+n+' Queens in '+n+'x'+n+' chess board!');
+        alert('No solution exists for ' + n + ' Queens in ' + n + 'x' + n + ' chess board!');
     }
 }
 
@@ -131,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     document.getElementById('copyCodeBtn').addEventListener('click', function() {
-        // const selectedCode = document.querySelector('input[name="code-lang"]:checked').value;
         const codeToCopy = javascript.textContent;
         navigator.clipboard.writeText(codeToCopy).then(() => {
             alert('Code copied to clipboard!');
@@ -142,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initially show Java code
     javascript.style.display = 'block';
-
     backgroundMusic.play();
 });
 
@@ -178,7 +179,7 @@ function play(){
 
     for (let i = 0; i < n; i++) {
         const queen = document.createElement('img');
-        queen.src = 'queen.png'; // Path to your queen image
+        queen.src = 'assets/queen.png'; // Path to your queen image
         queen.classList.add('queen');
         queen.draggable = true;
         cells[i * n + i].appendChild(queen);

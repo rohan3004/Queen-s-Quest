@@ -1,0 +1,16 @@
+{
+  "name": "Queens Quest",
+  "version": "1.0.0",
+  "description": "N-Queen Puzzle",
+  "main": "js/app.js",
+  "license": "",
+  "author": "Rohan Chakravarty",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohan3004/Queen-s-Quest.git"
+  },
+  "private": true
+}
