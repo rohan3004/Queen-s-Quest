@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: "Ubuntu", sans-serif;
     font-weight: 400;
@@ -11,14 +12,14 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)), url('../img/background.png') no-repeat center center fixed;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),url('../img/background.png') no-repeat center center fixed;
     background-size: cover;
 }
-a {
+a{
     text-decoration: none;
     color: white;
 }
-a:hover {
+a:hover{
     color: lightgray;
 }
 .container {
@@ -29,12 +30,14 @@ a:hover {
     flex: 1;
     color: white;
 }
+
 header {
     background-color: black;
     color: white;
     padding: 10px 0;
     top: 0;
 }
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -45,14 +48,17 @@ header {
     position: relative;
     z-index: 1000;
 }
-.navbar-left {
+
+.navbar-left{
     flex: 1;
     text-decoration: none;
 }
-.navbar-right {
+
+.navbar-right{
     display: flex;
     align-items: center;
 }
+
 .nav-links {
     list-style-type: none;
     padding: 0;
@@ -60,39 +66,50 @@ header {
     gap: 15px;
     display: flex;
 }
+
 .nav-links li {
     margin-left: 20px;
     display: inline;
 }
+
 .nav-links li:first-child {
     margin-left: 0;
 }
+
 .nav-links li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
+
 .nav-links li a:hover {
     color: lightgray;
 }
+
 .social-icons {
     display: flex;
     align-items: center;
     margin-left: 20px;
 }
+
 .social-icons a {
     color: white;
     margin-left: 10px;
     font-size: 24px; /* Adjust size as needed */
 }
+
 .social-icons a:hover {
     color: lightgray;
 }
+
 .hamburger-menu {
     display: none;
     cursor: pointer;
     padding: 10px;
 }
+
+
+
 .board-container {
     display: flex;
     justify-content: center;
@@ -100,6 +117,8 @@ header {
     margin-top: 20px;
     position: relative;
 }
+
+
 .board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
@@ -111,6 +130,7 @@ header {
     box-shadow: 0 0 30px 30px rgba(255, 105, 105, 0.3); /* Red glowing effect */
     border-radius: 15px;
 }
+
 .cell {
     width: 100%;
     height: 0;
@@ -122,15 +142,19 @@ header {
     position: relative;
     transition: background-color 0.5s ease, transform 0.5s ease;
 }
+
 .cell.black {
     background-color: #973131;
 }
+
 .cell.white {
     background-color: #F4E5C2;
 }
+
 .cell.highlight {
     background-color: #C40C0C;
 }
+
 .queen {
     color: #323232;
     font-size: 2em;
@@ -143,11 +167,14 @@ header {
     animation: fadeIn 1s forwards;
     transition: transform 0.5s ease;
 }
+
 @keyframes fadeIn {
     to {
         opacity: 1;
     }
 }
+
+
 button {
     background-color: transparent;
     border: 2px solid #C80036; /* Blue border color */
@@ -160,11 +187,13 @@ button {
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
     margin: 10px 0px 0px 10px;
 }
+
 button:hover {
     background-color: #C80036; /* Blue background color on hover */
     color: white; /* White text color on hover */
     border-color: #C80036; /* Blue border color on hover */
 }
+
 input[type="number"] {
     padding: 10px;
     font-size: 16px;
@@ -177,15 +206,19 @@ input[type="number"] {
     box-shadow: 0 0 10px 2px rgba(255, 105, 105, 0.3); /* Glow effect */
     transition: box-shadow 0.5s ease-in-out;
 }
+
 input[type="number"]:focus {
     box-shadow: 0 0 20px 5px rgba(255, 105, 105, 0.5); /* Increased glow on focus */
 }
+
+
 footer {
     background-color: black; /* Transparent background */
     color: white;
     text-align: center;
     padding: 10px 0;
 }
+
 footer p {
     margin: 0;
     font-size: 14px;
@@ -197,16 +230,23 @@ footer p {
     flex-direction: column;
     margin-top: 20px;
 }
+
+
 @media screen and (max-width: 768px) {
-    footer p {
+
+
+    footer p{
         font-size: .7em;
     }
+
     .navbar-right {
         position: relative;
     }
+
     .hamburger-menu {
         display: block;
     }
+
     .nav-links {
         display: none;
         flex-direction: column;
@@ -218,26 +258,31 @@ footer p {
         text-align: center;
         border-radius: 10px;
     }
+
     .nav-links.active {
         display: flex;
     }
+
     .nav-links li {
         margin: 10px 0;
     }
+
 }
+
+
+/* Modal styles */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    justify-content: center;
-    align-items: center;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.9); /* Dark background with opacity */
 }
+
 .modal-content {
     background-color: #2d2d2d; /* Dark grey background */
     color: #ffffff; /* Light text color */
@@ -252,27 +297,6 @@ footer p {
     max-height: 90%;
 }
 
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.modal-header h2 {
-    margin: 0;
-    font-size: 1.5em;
-}
-.modal-close {
-    color: #aaa;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-.modal-close:hover,
-.modal-close:focus {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
 .close-btn {
     color: #aaa;
     float: right;
