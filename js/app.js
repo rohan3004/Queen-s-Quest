@@ -321,3 +321,4 @@ function play(){
         return true;
     }
 }
+document.getElementById("currentYear").textContent = new Date().getFullYear();
