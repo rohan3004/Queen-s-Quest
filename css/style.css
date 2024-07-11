@@ -153,6 +153,7 @@ header {
 
 .cell.highlight {
     background-color: #C40C0C;
+    transition: background-color 0.5s ease, transform 0.5s ease;
 }
 
 .queen {

@@ -113,7 +113,8 @@ async function solveNQueens() {
     if (!await solveNQueensUtil(board, 0, n, left, upperD, lowerD)) {
         alert('No solution exists for ' + n + ' Queens in ' + n + 'x' + n + ' chess board!');
     }
-
+    const backgroundMusic = document.getElementById('bgMusic');
+    backgroundMusic.play();
 }
 
 
@@ -129,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('problemStatementModal');
     const btn = document.getElementById('problemStatementLink');
     const span = document.getElementsByClassName('close-btn')[0];
-    const backgroundMusic = document.getElementById('bgMusic');
     const javascript = document.getElementById('code-javascript');
     
     const board = document.querySelector('.board');
@@ -172,7 +172,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     javascript.style.display = 'block';
-    backgroundMusic.play();
 });
 
 function play(){
@@ -299,26 +298,38 @@ function play(){
             }
         });
 
-        if (queenPositions.length === n && isValidSolution(queenPositions)) {
+        cells.forEach(cell => cell.classList.remove('highlight'));
+
+    if (queenPositions.length === n) {
+        const conflicts = isValidSolution(queenPositions);
+        if (conflicts.length === 0) {
             congratsMessage.style.display = 'block';
             setTimeout(() => {
                 congratsMessage.style.display = 'none';
-            }, 3000); // Hide message after 5 seconds
+            }, 3000); // Hide message after 3 seconds
         } else {
+            conflicts.forEach(([r, c]) => {
+                const index = r * n + c;
+                cells[index].classList.add('highlight');
+            });
             congratsMessage.style.display = 'none';
         }
+    } else {
+        congratsMessage.style.display = 'none';
+    }
     }
     function isValidSolution(positions) {
+        const conflicts = [];
         for (let i = 0; i < positions.length; i++) {
             for (let j = i + 1; j < positions.length; j++) {
                 const [r1, c1] = positions[i];
                 const [r2, c2] = positions[j];
                 if (r1 === r2 || c1 === c2 || Math.abs(r1 - r2) === Math.abs(c1 - c2)) {
-                    return false;
+                    conflicts.push([r1, c1], [r2, c2]);
                 }
             }
         }
-        return true;
+        return conflicts;
     }
 }
 document.getElementById("currentYear").textContent = new Date().getFullYear();
