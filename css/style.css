@@ -12,9 +12,19 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),url('../img/background.png') no-repeat center center fixed;
-    background-size: cover;
+    /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),url('../img/background.png') no-repeat center center fixed; depricated*/
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8),rgba(0,0,0,0.95));
+    /* background-size: cover; depricated*/
 }
+canvas{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
 a{
     text-decoration: none;
     color: white;
@@ -125,10 +135,9 @@ header {
     gap: 2px;
     width: 100%; /* Ensure the board takes full width */
     max-width: 600px; /* Limit board width for better readability */
-    background-color: rgba(255, 255, 255, 0); /* Transparent background */
+    background-color: rgb(0, 0, 0,0.3); /* Transparent background */
     padding: 10px;
-    box-shadow: 0 0 30px 30px rgba(255, 105, 105, 0.3); /* Red glowing effect */
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .cell {
@@ -144,15 +153,15 @@ header {
 }
 
 .cell.black {
-    background-color: #973131;
+    background-color: #C80036;
 }
 
 .cell.white {
-    background-color: #F4E5C2;
+    background-color: #FFF5E1;
 }
 
 .cell.highlight {
-    background-color: #C40C0C;
+    background-color: #FF6969;
     transition: background-color 0.5s ease, transform 0.5s ease;
 }
 
@@ -202,9 +211,9 @@ input[type="number"] {
     border-radius: 5px;
     background-color: rgba(255, 105, 105, 0); /* Transparent background */
     margin-bottom: 10px;
-    color: white; /* Text color */
-    outline: none;
-    box-shadow: 0 0 10px 2px rgba(255, 105, 105, 0.3); /* Glow effect */
+    color: #C80036; /* Text color */
+    outline: solid;
+    /* box-shadow: 0 0 10px 2px rgba(255, 105, 105, 0.3); Glow effect depricated*/
     transition: box-shadow 0.5s ease-in-out;
 }
 
@@ -235,9 +244,6 @@ footer p {
 
 @media screen and (max-width: 768px) {
 
-    body{
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7)),url('../img/mobile.webp')fixed;
-    }
 
 
     footer p{

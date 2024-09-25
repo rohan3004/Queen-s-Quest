@@ -1,3 +1,14 @@
+const audio = document.getElementById("bgMusic");
+
+window.addEventListener("blur", () => {
+    audio.pause();
+  });
+  
+  // Resume the music when the window is focused again
+  window.addEventListener("focus", () => {
+    audio.play();
+  });
+
 // Function to create the chessboard
 function createBoard(n) {
     const board = document.querySelector('.board');
