@@ -4,6 +4,24 @@
     box-sizing: border-box;
 }
 
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* Black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Keep it above other content */
+  }
+  
+  svg {
+    height: 150px;
+    width: 150px;
+  }
+
 body {
     font-family: "Ubuntu", sans-serif;
     font-weight: 400;
@@ -16,13 +34,26 @@ body {
     background: linear-gradient(to bottom, rgba(0,0,0,0.8),rgba(0,0,0,0.95));
     /* background-size: cover; depricated*/
 }
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Black overlay with opacity */
+    pointer-events: none; /* Allows interaction with underlying content */
+    z-index: -1; /* Ensures the overlay is on top */
+}
+
 canvas{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: -2;
 }
 
 a{

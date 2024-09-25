@@ -1,3 +1,13 @@
+window.addEventListener('load', function() {
+    // Keep the preloader visible for 5 seconds before hiding it
+    setTimeout(function() {
+      var preloader = document.getElementById('preloader');
+      var content = document.getElementById('content');
+      
+      preloader.style.display = 'none';  // Hide the preloader
+      content.style.display = 'block';   // Show the main content
+    }, 3000);  // Delay of 5000 milliseconds (5 seconds)
+  });
 const audio = document.getElementById("bgMusic");
 
 window.addEventListener("blur", () => {
